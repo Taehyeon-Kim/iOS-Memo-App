@@ -11,7 +11,7 @@
         <!--홈-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="HomeVC" customModule="iOS_Memo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeVC" id="BYZ-38-t0r" customClass="HomeVC" customModule="iOS_Memo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -106,7 +106,7 @@
         <!--메모 보기-->
         <scene sceneID="H0F-Qh-C3M">
             <objects>
-                <viewController id="kem-jX-qJG" customClass="DetailVC" customModule="iOS_Memo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="kem-jX-qJG" customClass="DetailVC" customModule="iOS_Memo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Dw4-ik-RVw">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -159,7 +159,7 @@
         <!--메모 작성하기-->
         <scene sceneID="cIR-f1-VqZ">
             <objects>
-                <viewController id="HFq-Ig-Wus" customClass="WriteVC" customModule="iOS_Memo_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WriteVC" id="HFq-Ig-Wus" customClass="WriteVC" customModule="iOS_Memo_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KiK-6q-5Gg">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

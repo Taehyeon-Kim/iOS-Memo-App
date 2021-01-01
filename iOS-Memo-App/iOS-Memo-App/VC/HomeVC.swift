@@ -17,6 +17,7 @@ class HomeVC: UIViewController {
         Memo(imageUrl: "avatar1", title: "메모", content: "내용", isOn: false),
         Memo(imageUrl: "avatar2", title: "메모", content: "내용", isOn: false),
     ]
+    var longpress: UILongPressGestureRecognizer!
 
     //MARK: - Life Cycle
     override func viewDidLoad() {
@@ -25,6 +26,10 @@ class HomeVC: UIViewController {
         // tableView delegate 선언
         tableView.delegate = self
         tableView.dataSource = self
+        
+        // 길게 눌렀을 때 처리
+        longpress = UILongPressGestureRecognizer(target: self, action: #selector(self.longPressGestureRecognized))
+        tableView.addGestureRecognizer(longpress)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -56,6 +61,41 @@ class HomeVC: UIViewController {
             }
         }
         
+    }
+    
+    //MARK: - Custom Function
+    @objc func longPressGestureRecognized(gestureRecognizer: UIGestureRecognizer) {
+            let longPress = gestureRecognizer as! UILongPressGestureRecognizer
+        
+            if longPress.state == UIGestureRecognizer.State.began {
+                let locationInTableView = longPress.location(in: tableView)
+                let indexPath = tableView.indexPathForRow(at: locationInTableView)
+                
+                let title = memoList[indexPath?.row ?? -0].title
+                let content = memoList[indexPath?.row ?? -0].content
+                
+                // 알림
+                let alert = UIAlertController(title: title, message: content, preferredStyle: UIAlertController.Style.alert)
+                let okAction = UIAlertAction(title: "자세히 보기", style: .default, handler: { action in
+                        
+                    // handler에 함수를 바로 처리한 이유: indexPath를 사용하기 위해서 (질문)
+                    let detailVC = self.storyboard?.instantiateViewController(identifier: "DetailVC") as! DetailVC
+                    
+                    detailVC.memo = self.memoList[indexPath?.row ?? -0]
+                    detailVC.index = indexPath?.row ?? -0
+                    
+                    self.navigationController?.pushViewController(detailVC, animated: true)
+                })
+                
+                let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+                
+                // 연결
+                alert.addAction(okAction)
+                alert.addAction(cancelAction)
+                
+                present(alert, animated: true, completion: nil)
+                
+            }
     }
 }
 
