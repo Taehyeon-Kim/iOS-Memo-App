@@ -35,13 +35,14 @@ class HomeVC: UIViewController {
     //MARK: - Prepare (write To Home)
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        //WriteVC의 권한을 뷰컨에 위임
+        // WriteVC의 권한을 뷰컨에 위임
         if segue.identifier == "writeToHome" {
             if let writeVC = segue.destination as? WriteVC {
                 writeVC.delegate = self
             }
         }
         
+        // DetailVC의 권한을 뷰컨에 위임
         else if segue.identifier == "homeToDetail" {
             if let detailVC = segue.destination as? DetailVC {
                 if let cell = sender as? MemoTableViewCell, let indexPath = tableView.indexPath(for: cell) {
@@ -59,7 +60,7 @@ class HomeVC: UIViewController {
 }
 
 
-// MARK: - TableViewDataSource
+// MARK: - TableView DataSource
 extension HomeVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -91,8 +92,28 @@ extension HomeVC: UITableViewDataSource {
     
 }
 
-// MARK: - TableViewDelegate
+// MARK: - TableView Delegate
 extension HomeVC: UITableViewDelegate {
+    
+    // 왼쪽 스와이프
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let pinAction = UIContextualAction(style: .normal, title: "고정", handler: { (ac:UIContextualAction, UIView, success: (Bool) -> Void) in
+            
+        })
+        
+        return UISwipeActionsConfiguration(actions: [pinAction])
+    }
+    
+    
+    // 오른쪽 스와이프
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title: "삭제", handler: { (ac:UIContextualAction, UIView, success: (Bool) -> Void) in
+            self.memoList.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
+        })
+        
+        return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
     
 }
 
