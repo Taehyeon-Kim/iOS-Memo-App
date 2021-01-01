@@ -42,6 +42,18 @@ class HomeVC: UIViewController {
             }
         }
         
+        else if segue.identifier == "homeToDetail" {
+            if let detailVC = segue.destination as? DetailVC {
+                if let cell = sender as? MemoTableViewCell, let indexPath = tableView.indexPath(for: cell) {
+
+                    detailVC.index = indexPath.row
+                    detailVC.memo = self.memoList[indexPath.row]
+                    
+                }
+                
+            }
+        }
+        
     }
 }
 

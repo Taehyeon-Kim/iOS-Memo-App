@@ -72,7 +72,7 @@
                                             <outlet property="memoImageLabel" destination="iV7-xk-coS" id="dWV-Nd-Rom"/>
                                             <outlet property="memoTitleLabel" destination="B0Q-br-Ycr" id="C0D-Bk-A79"/>
                                             <outlet property="memoToggleButton" destination="P21-Ds-xUU" id="pMy-Db-GyI"/>
-                                            <segue destination="kem-jX-qJG" kind="show" id="Rex-ao-UHh"/>
+                                            <segue destination="kem-jX-qJG" kind="show" identifier="homeToDetail" id="Rex-ao-UHh"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -110,10 +110,47 @@
                     <view key="view" contentMode="scaleToFill" id="Dw4-ik-RVw">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qVr-BQ-pUa">
+                                <rect key="frame" x="20" y="108" width="64" height="64"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="64" id="Nxa-bQ-BiH"/>
+                                    <constraint firstAttribute="height" constant="64" id="emK-gf-ayK"/>
+                                </constraints>
+                            </imageView>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8MN-ib-xLj">
+                                <rect key="frame" x="92" y="127.5" width="314" height="25.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="LhT-SG-Qhc">
+                                <rect key="frame" x="20" y="192" width="386" height="670"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="wkm-Tj-5N7"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="qVr-BQ-pUa" firstAttribute="top" secondItem="wkm-Tj-5N7" secondAttribute="top" constant="20" id="FfJ-aw-tZF"/>
+                            <constraint firstItem="qVr-BQ-pUa" firstAttribute="leading" secondItem="wkm-Tj-5N7" secondAttribute="leading" constant="20" id="GSE-sa-J3C"/>
+                            <constraint firstItem="wkm-Tj-5N7" firstAttribute="bottom" secondItem="LhT-SG-Qhc" secondAttribute="bottom" id="RCw-o0-NFN"/>
+                            <constraint firstItem="8MN-ib-xLj" firstAttribute="centerY" secondItem="qVr-BQ-pUa" secondAttribute="centerY" id="U9L-A0-CPn"/>
+                            <constraint firstItem="8MN-ib-xLj" firstAttribute="leading" secondItem="qVr-BQ-pUa" secondAttribute="trailing" constant="8" id="bl7-nP-cLp"/>
+                            <constraint firstItem="LhT-SG-Qhc" firstAttribute="leading" secondItem="qVr-BQ-pUa" secondAttribute="leading" id="dkG-Gz-mYe"/>
+                            <constraint firstItem="LhT-SG-Qhc" firstAttribute="top" secondItem="qVr-BQ-pUa" secondAttribute="bottom" constant="20" id="gEa-e2-dXe"/>
+                            <constraint firstItem="LhT-SG-Qhc" firstAttribute="trailing" secondItem="8MN-ib-xLj" secondAttribute="trailing" id="nK8-rZ-gte"/>
+                            <constraint firstItem="wkm-Tj-5N7" firstAttribute="trailing" secondItem="8MN-ib-xLj" secondAttribute="trailing" constant="8" id="sLa-WS-cob"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="메모 보기" id="Imt-Ys-2Z5"/>
+                    <connections>
+                        <outlet property="memoContentTextView" destination="LhT-SG-Qhc" id="clU-7e-OHa"/>
+                        <outlet property="memoImageView" destination="qVr-BQ-pUa" id="oox-bi-3Wb"/>
+                        <outlet property="memoTitleLabel" destination="8MN-ib-xLj" id="zI6-qS-cg4"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wx7-Qr-ioV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
