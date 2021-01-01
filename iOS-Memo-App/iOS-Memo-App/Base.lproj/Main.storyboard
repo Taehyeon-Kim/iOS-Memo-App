@@ -91,7 +91,7 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="DwE-2d-I9A">
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
-                                <segue destination="HFq-Ig-Wus" kind="show" id="k8n-ny-IOT"/>
+                                <segue destination="HFq-Ig-Wus" kind="show" identifier="writeToHome" id="k8n-ny-IOT"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -126,14 +126,44 @@
                     <view key="view" contentMode="scaleToFill" id="KiK-6q-5Gg">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dWX-Zy-lPq">
+                                <rect key="frame" x="20" y="108" width="374" height="25.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Why-Vb-aIs">
+                                <rect key="frame" x="20" y="153.5" width="374" height="708.5"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="vfE-6V-SUj"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="vfE-6V-SUj" firstAttribute="trailing" secondItem="dWX-Zy-lPq" secondAttribute="trailing" constant="20" id="6Cz-tG-vZ0"/>
+                            <constraint firstItem="Why-Vb-aIs" firstAttribute="top" secondItem="dWX-Zy-lPq" secondAttribute="bottom" constant="20" id="CPn-0P-mTV"/>
+                            <constraint firstItem="dWX-Zy-lPq" firstAttribute="leading" secondItem="vfE-6V-SUj" secondAttribute="leading" constant="20" id="FTO-Fx-Q3q"/>
+                            <constraint firstItem="vfE-6V-SUj" firstAttribute="trailing" secondItem="Why-Vb-aIs" secondAttribute="trailing" constant="20" id="eaz-Ed-Qbg"/>
+                            <constraint firstItem="dWX-Zy-lPq" firstAttribute="top" secondItem="vfE-6V-SUj" secondAttribute="top" constant="20" id="qG4-89-E0M"/>
+                            <constraint firstItem="Why-Vb-aIs" firstAttribute="leading" secondItem="vfE-6V-SUj" secondAttribute="leading" constant="20" id="sH7-nH-cY9"/>
+                            <constraint firstItem="vfE-6V-SUj" firstAttribute="bottom" secondItem="Why-Vb-aIs" secondAttribute="bottom" id="uDw-5u-OVs"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="메모 작성하기" id="S8n-QH-9oa">
                         <barButtonItem key="rightBarButtonItem" title="완료" id="KXZ-dq-741">
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="memoWriteButtonClicked:" destination="HFq-Ig-Wus" id="Pf9-7G-GKh"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="memoContentTextView" destination="Why-Vb-aIs" id="ZXh-Xo-RgJ"/>
+                        <outlet property="memoTitleTextField" destination="dWX-Zy-lPq" id="F1g-dj-Gpj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EQf-0Y-2xd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -160,6 +190,9 @@
         </scene>
     </scenes>
     <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

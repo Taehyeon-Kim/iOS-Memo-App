@@ -16,26 +16,9 @@ class HomeVC: UIViewController {
     var memoList: [Memo] = [
         Memo(imageUrl: "avatar1", title: "메모", content: "내용", isOn: false),
         Memo(imageUrl: "avatar2", title: "메모", content: "내용", isOn: false),
-        Memo(imageUrl: "avatar1", title: "메모", content: "내용", isOn: false),
-        Memo(imageUrl: "avatar2", title: "메모", content: "내용", isOn: false),
-        Memo(imageUrl: "avatar1", title: "메모", content: "내용", isOn: false),
-        Memo(imageUrl: "avatar2", title: "메모", content: "내용", isOn: false),
-        Memo(imageUrl: "avatar1", title: "메모", content: "내용", isOn: false),
-        Memo(imageUrl: "avatar2", title: "메모", content: "내용", isOn: false),
-        Memo(imageUrl: "avatar1", title: "메모", content: "내용", isOn: false),
-        Memo(imageUrl: "avatar2", title: "메모", content: "내용", isOn: false),
-        Memo(imageUrl: "avatar1", title: "메모", content: "내용", isOn: false),
-        Memo(imageUrl: "avatar2", title: "메모", content: "내용", isOn: false),
-        Memo(imageUrl: "avatar1", title: "메모", content: "내용", isOn: false),
-        Memo(imageUrl: "avatar2", title: "메모", content: "내용", isOn: false),
-        Memo(imageUrl: "avatar1", title: "메모", content: "내용", isOn: false),
-        Memo(imageUrl: "avatar2", title: "메모", content: "내용", isOn: false),
-        Memo(imageUrl: "avatar1", title: "메모", content: "내용", isOn: false),
-        Memo(imageUrl: "avatar2", title: "메모", content: "내용", isOn: false),
-        Memo(imageUrl: "avatar1", title: "메모", content: "내용", isOn: false),
-        Memo(imageUrl: "avatar2", title: "메모", content: "내용", isOn: false),
     ]
 
+    //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -44,7 +27,22 @@ class HomeVC: UIViewController {
         tableView.dataSource = self
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        // view가 다시 나타날때 tableview 데이터 리로드
+        tableView.reloadData()
+    }
 
+    //MARK: - Prepare (write To Home)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        //WriteVC의 권한을 뷰컨에 위임
+        if segue.identifier == "writeToHome" {
+            if let writeVC = segue.destination as? WriteVC {
+                writeVC.delegate = self
+            }
+        }
+        
+    }
 }
 
 
@@ -91,6 +89,17 @@ extension HomeVC: MemoTableViewCellDelegate {
     
     func selectedToggleButton(index: Int) {
         memoList[index].isOn = !memoList[index].isOn
+    }
+    
+}
+
+// MARK: - MemoWriteDelegate
+extension HomeVC: MemoWriteDelegate {
+    
+    // 작성한 메모 데이터 전달
+    func writeData(imageUrl: String, title: String, content: String) {
+        let memo = Memo(imageUrl: imageUrl, title: title, content: content, isOn: false)
+        self.memoList.append(memo)
     }
     
 }
