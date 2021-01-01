@@ -16,6 +16,7 @@
 		BD4F2984259F076A0099BDA2 /* WriteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4F2983259F076A0099BDA2 /* WriteVC.swift */; };
 		BD4F2987259F07AA0099BDA2 /* DetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4F2986259F07AA0099BDA2 /* DetailVC.swift */; };
 		BD4F298D259F09690099BDA2 /* MemoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4F298C259F09690099BDA2 /* MemoTableViewCell.swift */; };
+		BD4F2990259F0AC00099BDA2 /* Memo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4F298F259F0AC00099BDA2 /* Memo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		BD4F2983259F076A0099BDA2 /* WriteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteVC.swift; sourceTree = "<group>"; };
 		BD4F2986259F07AA0099BDA2 /* DetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVC.swift; sourceTree = "<group>"; };
 		BD4F298C259F09690099BDA2 /* MemoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoTableViewCell.swift; sourceTree = "<group>"; };
+		BD4F298F259F0AC00099BDA2 /* Memo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,14 +64,15 @@
 		BD4F296B259F06290099BDA2 /* iOS-Memo-App */ = {
 			isa = PBXGroup;
 			children = (
+				BD4F2975259F062A0099BDA2 /* Assets.xcassets */,
 				BD4F296C259F06290099BDA2 /* AppDelegate.swift */,
 				BD4F296E259F06290099BDA2 /* SceneDelegate.swift */,
 				BD4F2972259F06290099BDA2 /* Main.storyboard */,
-				BD4F2975259F062A0099BDA2 /* Assets.xcassets */,
 				BD4F2977259F062A0099BDA2 /* LaunchScreen.storyboard */,
 				BD4F297A259F062A0099BDA2 /* Info.plist */,
 				BD4F298A259F07CD0099BDA2 /* VC */,
 				BD4F298C259F09690099BDA2 /* MemoTableViewCell.swift */,
+				BD4F298F259F0AC00099BDA2 /* Memo.swift */,
 			);
 			path = "iOS-Memo-App";
 			sourceTree = "<group>";
@@ -154,6 +157,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BD4F2990259F0AC00099BDA2 /* Memo.swift in Sources */,
 				BD4F2987259F07AA0099BDA2 /* DetailVC.swift in Sources */,
 				BD4F298D259F09690099BDA2 /* MemoTableViewCell.swift in Sources */,
 				BD4F2984259F076A0099BDA2 /* WriteVC.swift in Sources */,
