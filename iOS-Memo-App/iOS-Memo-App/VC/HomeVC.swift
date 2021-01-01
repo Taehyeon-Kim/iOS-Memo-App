@@ -46,6 +46,7 @@ class HomeVC: UIViewController {
             if let detailVC = segue.destination as? DetailVC {
                 if let cell = sender as? MemoTableViewCell, let indexPath = tableView.indexPath(for: cell) {
 
+                    detailVC.delegate = self
                     detailVC.index = indexPath.row
                     detailVC.memo = self.memoList[indexPath.row]
                     
@@ -105,13 +106,28 @@ extension HomeVC: MemoTableViewCellDelegate {
     
 }
 
-// MARK: - MemoWriteDelegate
+// MARK: - Memo Write Delegate
 extension HomeVC: MemoWriteDelegate {
     
     // 작성한 메모 데이터 전달
     func writeData(imageUrl: String, title: String, content: String) {
         let memo = Memo(imageUrl: imageUrl, title: title, content: content, isOn: false)
         self.memoList.append(memo)
+    }
+    
+}
+
+// MARK: - Memo Update Delegate
+extension HomeVC: MemoUpdateDelegate {
+    
+    // 작성한 메모 데이터 전달
+    func updateData(index: Int, imageUrl: String, title: String, content: String) {
+        let memo = Memo(imageUrl: imageUrl, title: title, content: content, isOn: false)
+        
+        self.memoList[index].imageUrl = memo.imageUrl
+        self.memoList[index].title = memo.title
+        self.memoList[index].content = memo.content
+        self.memoList[index].isOn = memo.isOn
     }
     
 }
