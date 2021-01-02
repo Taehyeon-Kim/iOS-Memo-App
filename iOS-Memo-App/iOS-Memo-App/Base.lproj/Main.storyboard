@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="jO4-yl-7YZ">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" allowsMultipleSelection="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="jO4-yl-7YZ">
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
@@ -35,19 +35,22 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="제목" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B0Q-br-Ycr">
-                                                    <rect key="frame" x="104" y="14" width="30" height="21"/>
+                                                    <rect key="frame" x="104" y="14" width="233" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="내용" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yB7-gN-mRB">
-                                                    <rect key="frame" x="104" y="57" width="30" height="21"/>
+                                                    <rect key="frame" x="104" y="57" width="233" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P21-Ds-xUU">
                                                     <rect key="frame" x="345" y="30.5" width="51" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="49" id="842-WA-Sf8"/>
+                                                    </constraints>
                                                     <connections>
                                                         <action selector="toggleButtonClicked:" destination="4G5-vA-hl9" eventType="valueChanged" id="NW6-Sy-R2i"/>
                                                     </connections>
@@ -57,9 +60,9 @@
                                                 <constraint firstItem="B0Q-br-Ycr" firstAttribute="leading" secondItem="iV7-xk-coS" secondAttribute="trailing" constant="20" id="3aG-fl-eA1"/>
                                                 <constraint firstAttribute="trailing" secondItem="P21-Ds-xUU" secondAttribute="trailing" constant="20" id="4Lc-EV-Odu"/>
                                                 <constraint firstItem="yB7-gN-mRB" firstAttribute="top" secondItem="B0Q-br-Ycr" secondAttribute="bottom" constant="22" id="8As-rl-Gpd"/>
-                                                <constraint firstItem="P21-Ds-xUU" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="yB7-gN-mRB" secondAttribute="trailing" constant="8" symbolic="YES" id="8l3-Pf-cj4"/>
+                                                <constraint firstItem="P21-Ds-xUU" firstAttribute="leading" secondItem="yB7-gN-mRB" secondAttribute="trailing" constant="8" symbolic="YES" id="8l3-Pf-cj4"/>
                                                 <constraint firstItem="iV7-xk-coS" firstAttribute="centerY" secondItem="JJP-w8-TSd" secondAttribute="centerY" id="BCw-Tb-RIa"/>
-                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="B0Q-br-Ycr" secondAttribute="trailing" constant="20" symbolic="YES" id="CXs-x6-D2f"/>
+                                                <constraint firstItem="P21-Ds-xUU" firstAttribute="leading" secondItem="B0Q-br-Ycr" secondAttribute="trailing" constant="8" symbolic="YES" id="CXs-x6-D2f"/>
                                                 <constraint firstItem="iV7-xk-coS" firstAttribute="leading" secondItem="JJP-w8-TSd" secondAttribute="leading" constant="20" id="SMV-xz-BH9"/>
                                                 <constraint firstItem="yB7-gN-mRB" firstAttribute="leading" secondItem="iV7-xk-coS" secondAttribute="trailing" constant="20" id="XOU-du-xmA"/>
                                                 <constraint firstItem="P21-Ds-xUU" firstAttribute="centerY" secondItem="JJP-w8-TSd" secondAttribute="centerY" id="hPt-aF-9bg"/>
@@ -88,6 +91,12 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="홈" id="OPQ-8X-IkM">
+                        <barButtonItem key="leftBarButtonItem" systemItem="organize" id="JIa-FU-tq6">
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="editButtonClicked:" destination="BYZ-38-t0r" id="DRJ-kv-5Gc"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="DwE-2d-I9A">
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>

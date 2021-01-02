@@ -35,7 +35,15 @@ class MemoTableViewCell: UITableViewCell {
     @IBOutlet weak var memoContentLabel: UILabel!
     @IBOutlet weak var memoToggleButton: UISwitch!
     
-
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+            super.init(style: style, reuseIdentifier: reuseIdentifier)
+            self.selectionStyle = .none
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -46,6 +54,8 @@ class MemoTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+        super.setSelected(selected, animated: animated)
+        self.accessoryType = selected ? .checkmark : .none
     }
     
     

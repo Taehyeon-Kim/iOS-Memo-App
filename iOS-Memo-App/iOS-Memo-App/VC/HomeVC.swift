@@ -16,20 +16,27 @@ class HomeVC: UIViewController {
     var memoList: [Memo] = [
         Memo(imageUrl: "avatar1", title: "메모", content: "내용", isOn: false),
         Memo(imageUrl: "avatar2", title: "메모", content: "내용", isOn: false),
+        Memo(imageUrl: "avatar1", title: "메모", content: "내용", isOn: false),
+        Memo(imageUrl: "avatar2", title: "메모", content: "내용", isOn: false),
+        Memo(imageUrl: "avatar1", title: "메모", content: "내용", isOn: false),
+        Memo(imageUrl: "avatar2", title: "메모", content: "내용", isOn: false),
     ]
     var longpress: UILongPressGestureRecognizer!
+    var editMode: Bool = false
+    
 
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // tableView delegate 선언
-        tableView.delegate = self
-        tableView.dataSource = self
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        
         
         // 길게 눌렀을 때 처리
         longpress = UILongPressGestureRecognizer(target: self, action: #selector(self.longPressGestureRecognized))
-        tableView.addGestureRecognizer(longpress)
+        self.tableView.addGestureRecognizer(longpress)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -43,24 +50,37 @@ class HomeVC: UIViewController {
         // WriteVC의 권한을 뷰컨에 위임
         if segue.identifier == "writeToHome" {
             if let writeVC = segue.destination as? WriteVC {
+
                 writeVC.delegate = self
+       
             }
         }
-        
+
         // DetailVC의 권한을 뷰컨에 위임
         else if segue.identifier == "homeToDetail" {
             if let detailVC = segue.destination as? DetailVC {
+
                 if let cell = sender as? MemoTableViewCell, let indexPath = tableView.indexPath(for: cell) {
 
                     detailVC.delegate = self
                     detailVC.index = indexPath.row
                     detailVC.memo = self.memoList[indexPath.row]
-                    
+
                 }
-                
+
             }
         }
-        
+    }
+    
+    override func shouldPerformSegue(withIdentifier identifier: String?, sender: Any?) -> Bool {
+        if let identifierName = identifier {
+            if identifierName == "homeToDetail" {
+                 if editMode {
+                      return false
+                 }
+            }
+        }
+        return true
     }
     
     //MARK: - Custom Function
@@ -97,6 +117,57 @@ class HomeVC: UIViewController {
                 
             }
     }
+    
+    @objc func deleteRows() {
+        if let selectedRows = tableView.indexPathsForSelectedRows {
+
+            // 1
+            var items: [String] = []
+            for indexPath in selectedRows  {
+                items.append(memoList[indexPath.row].title)
+            }
+            
+            // 2 - 제목으로 index를 찾아서 삭제하는데, 원소로는 배열에서 인덱스를 찾을 수 없는건가..?
+            for item in items {
+                if let index = items.index(of: item) {
+                    print(index)
+                    memoList.remove(at: index)
+                }
+            }
+            
+            // 3
+            tableView.beginUpdates()
+            tableView.deleteRows(at: selectedRows, with: .automatic)
+            tableView.endUpdates()
+            
+         }
+    }
+    
+    //MARK: - IBAction
+    @IBAction func editButtonClicked(_ sender: Any) {
+        
+        // isEditing이라는 프로퍼티를 이용하면 한줄로 편집모드를 만들수있다.
+        // self.tableView.isEditing = !self.tableView.isEditing
+        
+        let trash = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteRows))
+   
+        self.tableView.allowsMultipleSelection = true
+        self.tableView.allowsMultipleSelectionDuringEditing = true
+
+
+        if editMode == false {
+            editMode = true
+            tableView.setEditing(editMode, animated: true)
+            navigationItem.leftBarButtonItems?.append(trash)
+        } else {
+            editMode = false
+            tableView.setEditing(editMode, animated: true)
+            navigationItem.leftBarButtonItems?.removeLast()
+        }
+        
+    }
+    
+    
 }
 
 
@@ -155,6 +226,14 @@ extension HomeVC: UITableViewDelegate {
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "memoCell", for: indexPath) as? MemoTableViewCell  {
+            cell.accessoryType = .checkmark
+        }
+        
+    }
+    
 }
 
 
@@ -192,3 +271,5 @@ extension HomeVC: MemoUpdateDelegate {
     }
     
 }
+
+
