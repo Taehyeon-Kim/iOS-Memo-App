@@ -11,16 +11,20 @@ class HomeVC: UIViewController {
     
     // MARK: - IBOutlet
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     //MARK: - Variables
     var memoList: [Memo] = [
-        Memo(imageUrl: "avatar1", title: "메모", content: "내용", isOn: false),
-        Memo(imageUrl: "avatar2", title: "메모", content: "내용", isOn: false),
-        Memo(imageUrl: "avatar1", title: "메모", content: "내용", isOn: false),
-        Memo(imageUrl: "avatar2", title: "메모", content: "내용", isOn: false),
-        Memo(imageUrl: "avatar1", title: "메모", content: "내용", isOn: false),
-        Memo(imageUrl: "avatar2", title: "메모", content: "내용", isOn: false),
+        Memo(imageUrl: "avatar1", title: "메모1", content: "내용", isOn: false),
+        Memo(imageUrl: "avatar2", title: "메모2", content: "내용", isOn: false),
+        Memo(imageUrl: "avatar1", title: "메모3", content: "내용", isOn: false),
+        Memo(imageUrl: "avatar2", title: "메모4", content: "내용", isOn: false),
+        Memo(imageUrl: "avatar1", title: "메모5", content: "내용", isOn: false),
+        Memo(imageUrl: "avatar2", title: "메모6", content: "내용", isOn: false),
     ]
+    var filteredMemoList = [Memo]() // 검색에 의해 필터링 된 배열
+    var searching = false
+    
     var longpress: UILongPressGestureRecognizer!
     var editMode: Bool = false
     
@@ -33,6 +37,10 @@ class HomeVC: UIViewController {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
+        // searchBar delegate 선언
+        self.searchBar.delegate = self
+        self.searchBar.placeholder = "검색할 내용을 입력하세요"
+        self.filteredMemoList = self.memoList
         
         // 길게 눌렀을 때 처리
         longpress = UILongPressGestureRecognizer(target: self, action: #selector(self.longPressGestureRecognized))
@@ -64,7 +72,7 @@ class HomeVC: UIViewController {
 
                     detailVC.delegate = self
                     detailVC.index = indexPath.row
-                    detailVC.memo = self.memoList[indexPath.row]
+                    detailVC.memo = self.filteredMemoList[indexPath.row]
 
                 }
 
@@ -130,7 +138,6 @@ class HomeVC: UIViewController {
             // 2 - 제목으로 index를 찾아서 삭제하는데, 원소로는 배열에서 인덱스를 찾을 수 없는건가..?
             for item in items {
                 if let index = items.index(of: item) {
-                    print(index)
                     memoList.remove(at: index)
                 }
             }
@@ -175,7 +182,14 @@ class HomeVC: UIViewController {
 extension HomeVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return memoList.count
+
+        if searching {
+            return filteredMemoList.count
+        } else {
+            return memoList.count
+        }
+            
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -184,6 +198,15 @@ extension HomeVC: UITableViewDataSource {
             return UITableViewCell()
         }
         
+        var memoList = [Memo]()
+        
+        if searching {
+            memoList = self.filteredMemoList
+        } else {
+            memoList = self.memoList
+        }
+        
+
         cell.index = indexPath.row
         cell.delegate = self
         
@@ -273,3 +296,27 @@ extension HomeVC: MemoUpdateDelegate {
 }
 
 
+extension HomeVC: UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        filteredMemoList = searchText.isEmpty ? memoList : memoList.filter({( memo : Memo) -> Bool in
+            searching = true
+            return memo.title.range(of: searchText) != nil
+        })
+        
+        self.tableView.reloadData()
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        self.searchBar.showsCancelButton = true
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.searchBar.showsCancelButton = false
+        self.searchBar.text = ""
+        self.searchBar.resignFirstResponder()
+        
+        self.filteredMemoList = memoList
+        self.tableView.reloadData()
+    }
+}
