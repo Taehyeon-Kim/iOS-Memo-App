@@ -102,15 +102,24 @@
                                 <action selector="editButtonClicked:" destination="BYZ-38-t0r" id="DRJ-kv-5Gc"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="DwE-2d-I9A">
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <connections>
-                                <segue destination="HFq-Ig-Wus" kind="show" identifier="writeToHome" id="k8n-ny-IOT"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="DwE-2d-I9A">
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <segue destination="HFq-Ig-Wus" kind="show" identifier="writeToHome" id="k8n-ny-IOT"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="a-z" id="bSh-fR-VDv">
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <action selector="sortButtonClicked:" destination="BYZ-38-t0r" id="U1y-5G-XYe"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="searchBar" destination="h3B-lK-oIW" id="psR-fP-iAN"/>
+                        <outlet property="sortButton" destination="bSh-fR-VDv" id="BE1-M3-XtD"/>
                         <outlet property="tableView" destination="jO4-yl-7YZ" id="5Y7-3R-ovW"/>
                     </connections>
                 </viewController>

@@ -12,26 +12,34 @@ class HomeVC: UIViewController {
     // MARK: - IBOutlet
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var sortButton: UIBarButtonItem!
     
     //MARK: - Variables
-    var memoList: [Memo] = [
-        Memo(imageUrl: "avatar1", title: "메모1", content: "내용", isOn: false),
-        Memo(imageUrl: "avatar2", title: "메모2", content: "내용", isOn: false),
-        Memo(imageUrl: "avatar1", title: "메모3", content: "내용", isOn: false),
-        Memo(imageUrl: "avatar2", title: "메모4", content: "내용", isOn: false),
-        Memo(imageUrl: "avatar1", title: "메모5", content: "내용", isOn: false),
-        Memo(imageUrl: "avatar2", title: "메모6", content: "내용", isOn: false),
-    ]
+    var memoList = [Memo]()
     var filteredMemoList = [Memo]() // 검색에 의해 필터링 된 배열
+    var originMemoList = [Memo]()
     var searching = false
     
     var longpress: UILongPressGestureRecognizer!
     var editMode: Bool = false
+    var sortCount: Int = 0
     
 
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        memoList = [
+            Memo(imageUrl: "avatar1", title: "A1", content: "X", isOn: false),
+            Memo(imageUrl: "avatar2", title: "2", content: "b", isOn: false),
+            Memo(imageUrl: "avatar1", title: "Z3", content: "Z", isOn: false),
+            Memo(imageUrl: "avatar2", title: "x", content: "a", isOn: false),
+            Memo(imageUrl: "avatar1", title: "a", content: "e", isOn: false),
+            Memo(imageUrl: "avatar1", title: "다", content: "e", isOn: false),
+            Memo(imageUrl: "avatar2", title: "가", content: "g", isOn: false),
+        ]
+        
+        originMemoList = memoList
         
         // tableView delegate 선언
         self.tableView.delegate = self
@@ -137,10 +145,12 @@ class HomeVC: UIViewController {
             
             // 2 - 제목으로 index를 찾아서 삭제하는데, 원소로는 배열에서 인덱스를 찾을 수 없는건가..?
             for item in items {
-                if let index = items.index(of: item) {
-                    memoList.remove(at: index)
+                if let index = items.firstIndex(of: item) {
+                    self.memoList.remove(at: index)
                 }
             }
+            
+            filteredMemoList = memoList
             
             // 3
             tableView.beginUpdates()
@@ -174,6 +184,26 @@ class HomeVC: UIViewController {
         
     }
     
+    @IBAction func sortButtonClicked(_ sender: Any) {
+        
+        sortCount += 1
+
+        if sortCount == 1 {
+            memoList.sort { $0.title.lowercased() < $1.title.lowercased() }
+            self.sortButton.title = "z-a"
+            self.tableView.reloadData()
+        } else if sortCount == 2 {
+            memoList.sort { $0.title.lowercased() > $1.title.lowercased() }
+            self.sortButton.title = "origin"
+            self.tableView.reloadData()
+        } else {
+            sortCount = 0
+            memoList = originMemoList
+            self.sortButton.title = "a-z"
+            self.tableView.reloadData()
+        }
+   
+    }
     
 }
 
@@ -316,6 +346,7 @@ extension HomeVC: UISearchBarDelegate {
         self.searchBar.text = ""
         self.searchBar.resignFirstResponder()
         
+        self.searching = false
         self.filteredMemoList = memoList
         self.tableView.reloadData()
     }
