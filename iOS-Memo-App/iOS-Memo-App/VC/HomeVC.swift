@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import FanMenu
+import Macaw
 
 class HomeVC: UIViewController {
     
@@ -13,6 +15,7 @@ class HomeVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var sortButton: UIBarButtonItem!
+    @IBOutlet weak var fanMenu: FanMenu!
     
     //MARK: - Variables
     var memoList = [Memo]()
@@ -24,19 +27,30 @@ class HomeVC: UIViewController {
     var editMode: Bool = false
     var sortCount: Int = 0
     
+    let image = UIImage()
+    let emptyView = UIView()
 
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        fanMenuExec()
+        
         memoList = [
-            Memo(imageUrl: "avatar1", title: "A1", content: "X", isOn: false),
-            Memo(imageUrl: "avatar2", title: "2", content: "b", isOn: false),
-            Memo(imageUrl: "avatar1", title: "Z3", content: "Z", isOn: false),
-            Memo(imageUrl: "avatar2", title: "x", content: "a", isOn: false),
+            Memo(imageUrl: "avatar1", title: "A - 첫번째 메모", content: "아 오늘은 메모 연습", isOn: false),
+            Memo(imageUrl: "avatar2", title: "2 - 두번째 메모", content: "메모 삭제 기능 추가를 했다", isOn: false),
+            Memo(imageUrl: "avatar3", title: "Z3 - 세번째 메모", content: "너무 춥다 😂", isOn: false),
+            Memo(imageUrl: "avatar4", title: "x - 네번째 메모", content: "놀러 가고 싶다!!!!!", isOn: false),
+            Memo(imageUrl: "avatar5", title: "a - 다섯번째 메모", content: "ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ", isOn: false),
+            Memo(imageUrl: "avatar6", title: "다 - 여섯번째 메모", content: "오늘은 새로운걸 배웠다!! 👻👻👻", isOn: false),
+            Memo(imageUrl: "avatar1", title: "메모연습 - 일곱번째 메모", content: "새로운 메모를 작성하였습니다.", isOn: false),
+            Memo(imageUrl: "avatar4", title: "A1 - 여덟번째 메모", content: "쓸 내용이 없네 ?!", isOn: false),
+            Memo(imageUrl: "avatar3", title: "2 - 아홉번째 메모", content: "잘하고 싶어요 👊", isOn: false),
+            Memo(imageUrl: "avatar2", title: "Z3 - 열번째 메모", content: "화이팅!!!!!!!!!!!!!", isOn: false),
+            Memo(imageUrl: "avatar1", title: "x", content: "a", isOn: false),
             Memo(imageUrl: "avatar1", title: "a", content: "e", isOn: false),
-            Memo(imageUrl: "avatar1", title: "다", content: "e", isOn: false),
-            Memo(imageUrl: "avatar2", title: "가", content: "g", isOn: false),
+            Memo(imageUrl: "avatar2", title: "다", content: "e", isOn: false),
+            Memo(imageUrl: "avatar5", title: "가", content: "g", isOn: false),
         ]
         
         originMemoList = memoList
@@ -44,10 +58,15 @@ class HomeVC: UIViewController {
         // tableView delegate 선언
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.tableView.backgroundColor = .white
         
         // searchBar delegate 선언
         self.searchBar.delegate = self
-        self.searchBar.placeholder = "검색할 내용을 입력하세요"
+        self.searchBar.placeholder = "검색할 제목을 입력하세요"
+        self.searchBar.backgroundImage = self.image
+        self.searchBar.searchTextField.backgroundColor = .systemGray6
+        let directionalMargins = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20)
+        searchBar.directionalLayoutMargins = directionalMargins
         self.filteredMemoList = self.memoList
         
         // 길게 눌렀을 때 처리
@@ -80,7 +99,7 @@ class HomeVC: UIViewController {
 
                     detailVC.delegate = self
                     detailVC.index = indexPath.row
-                    detailVC.memo = self.filteredMemoList[indexPath.row]
+                    detailVC.memo = self.memoList[indexPath.row]
 
                 }
 
@@ -100,6 +119,50 @@ class HomeVC: UIViewController {
     }
     
     //MARK: - Custom Function
+    func fanMenuExec() {
+        
+        // Do any additional setup after loading the view.
+        fanMenu.button = FanMenuButton(
+            id: "main",
+            image: UIImage(named: "plus"),
+            color: Color(val: 0x74c7b8)
+        )
+        
+        fanMenu.items = [
+            FanMenuButton(
+                id: "write",
+                image: UIImage(named: "write"),
+                color: Color(val: 0x70af85)
+            ),
+            FanMenuButton(
+                id: "delete",
+                image: UIImage(named: "delete"),
+                color: Color(val: 0x70af85)
+            ),
+        ]
+        
+        fanMenu.menuBackground = Color(val: 0xdff3e3)
+        fanMenu.menuRadius = 100.0
+        fanMenu.duration = 0.2
+        fanMenu.interval = (Double.pi + Double.pi/4, Double.pi + 3 * Double.pi/4)
+        fanMenu.radius = 25.0
+        fanMenu.delay = 0.0
+        
+        fanMenu.onItemWillClick = { button in
+
+            if button.id == "write" {
+                print("hello")
+            } else if button.id == "delete" {
+                print("hello")
+            }
+
+        }
+        
+        fanMenu.backgroundColor = .clear
+        
+    }
+    
+    
     @objc func longPressGestureRecognized(gestureRecognizer: UIGestureRecognizer) {
             let longPress = gestureRecognizer as! UILongPressGestureRecognizer
         
@@ -134,6 +197,7 @@ class HomeVC: UIViewController {
             }
     }
     
+    // 행에 대한 삭제
     @objc func deleteRows() {
         if let selectedRows = tableView.indexPathsForSelectedRows {
 
@@ -145,7 +209,7 @@ class HomeVC: UIViewController {
             
             // 2 - 제목으로 index를 찾아서 삭제하는데, 원소로는 배열에서 인덱스를 찾을 수 없는건가..?
             for item in items {
-                if let index = items.firstIndex(of: item) {
+                if let index = items.index(of: item) {
                     self.memoList.remove(at: index)
                 }
             }
@@ -161,6 +225,7 @@ class HomeVC: UIViewController {
     }
     
     //MARK: - IBAction
+    // 편집, 삭제, 전체삭제
     @IBAction func editButtonClicked(_ sender: Any) {
         
         // isEditing이라는 프로퍼티를 이용하면 한줄로 편집모드를 만들수있다.
@@ -184,6 +249,7 @@ class HomeVC: UIViewController {
         
     }
     
+    // 정렬
     @IBAction func sortButtonClicked(_ sender: Any) {
         
         sortCount += 1
@@ -194,7 +260,7 @@ class HomeVC: UIViewController {
             self.tableView.reloadData()
         } else if sortCount == 2 {
             memoList.sort { $0.title.lowercased() > $1.title.lowercased() }
-            self.sortButton.title = "origin"
+            self.sortButton.title = "기본"
             self.tableView.reloadData()
         } else {
             sortCount = 0
@@ -287,6 +353,14 @@ extension HomeVC: UITableViewDelegate {
         
     }
     
+    // 그룹 헤더
+    func numberOfSections(in tableView: UITableView) -> Int {
+        1
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "메모"
+    }
 }
 
 
@@ -325,7 +399,7 @@ extension HomeVC: MemoUpdateDelegate {
     
 }
 
-
+// 검색(search) 델리게이트(delegate)
 extension HomeVC: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

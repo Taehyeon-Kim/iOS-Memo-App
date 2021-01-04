@@ -16,20 +16,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" allowsMultipleSelection="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="jO4-yl-7YZ">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <searchBar key="tableHeaderView" contentMode="redraw" id="h3B-lK-oIW">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" allowsSelectionDuringEditing="YES" allowsMultipleSelection="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="jO4-yl-7YZ">
+                                <rect key="frame" x="0.0" y="138" width="414" height="724"/>
+                                <searchBar key="tableHeaderView" clipsSubviews="YES" contentMode="redraw" text="" id="h3B-lK-oIW">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <offsetWrapper key="searchFieldBackgroundPositionAdjustment" horizontal="0.0" vertical="0.0"/>
                                     <textInputTraits key="textInputTraits"/>
                                 </searchBar>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="memoCell" rowHeight="92" id="4G5-vA-hl9" customClass="MemoTableViewCell" customModule="iOS_Memo_App" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="72" width="414" height="92"/>
+                                        <rect key="frame" x="20" y="99.5" width="374" height="92"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4G5-vA-hl9" id="JJP-w8-TSd">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="92"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="92"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iV7-xk-coS">
@@ -40,19 +40,19 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="제목" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B0Q-br-Ycr">
-                                                    <rect key="frame" x="104" y="14" width="233" height="21"/>
+                                                    <rect key="frame" x="104" y="14" width="193" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="내용" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yB7-gN-mRB">
-                                                    <rect key="frame" x="104" y="57" width="233" height="21"/>
+                                                    <rect key="frame" x="104" y="57" width="193" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P21-Ds-xUU">
-                                                    <rect key="frame" x="345" y="30.5" width="51" height="31"/>
+                                                    <rect key="frame" x="305" y="30.5" width="51" height="31"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="49" id="842-WA-Sf8"/>
                                                     </constraints>
@@ -85,32 +85,62 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MpA-pn-2uH" userLabel="Header">
+                                <rect key="frame" x="0.0" y="88" width="414" height="50"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="오늘도 메모해볼까?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sPs-lr-srR">
+                                        <rect key="frame" x="20" y="18" width="185" height="29"/>
+                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="24"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="sPs-lr-srR" firstAttribute="top" secondItem="MpA-pn-2uH" secondAttribute="top" constant="18" id="dbZ-ze-Q8n"/>
+                                    <constraint firstItem="sPs-lr-srR" firstAttribute="leading" secondItem="MpA-pn-2uH" secondAttribute="leading" constant="20" id="utf-x1-M6c"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LLN-mc-Ehp" customClass="FanMenu" customModule="FanMenu">
+                                <rect key="frame" x="82" y="722" width="250" height="250"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="250" id="6wY-0e-H2f"/>
+                                    <constraint firstAttribute="width" constant="250" id="mR5-uE-MDd"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="MpA-pn-2uH" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="4pb-GD-p08"/>
                             <constraint firstItem="jO4-yl-7YZ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="7gi-Yc-IoW"/>
                             <constraint firstItem="jO4-yl-7YZ" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="I8v-SU-FJc"/>
-                            <constraint firstItem="jO4-yl-7YZ" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="T40-ie-TQb"/>
-                            <constraint firstItem="jO4-yl-7YZ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="ra6-2H-4WH"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="jO4-yl-7YZ" secondAttribute="bottom" id="T40-ie-TQb"/>
+                            <constraint firstItem="LLN-mc-Ehp" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Tlt-Vg-qVJ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="LLN-mc-Ehp" secondAttribute="bottom" constant="-110" id="Ubf-xi-quw"/>
+                            <constraint firstItem="jO4-yl-7YZ" firstAttribute="top" secondItem="MpA-pn-2uH" secondAttribute="bottom" id="gBF-g3-uOz"/>
+                            <constraint firstItem="MpA-pn-2uH" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="l8h-8w-djn"/>
+                            <constraint firstItem="MpA-pn-2uH" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="nJs-T2-3dD"/>
+                            <constraint firstItem="jO4-yl-7YZ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="50" id="ra6-2H-4WH"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="홈" id="OPQ-8X-IkM">
                         <barButtonItem key="leftBarButtonItem" systemItem="organize" id="JIa-FU-tq6">
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="editButtonClicked:" destination="BYZ-38-t0r" id="DRJ-kv-5Gc"/>
                             </connections>
                         </barButtonItem>
                         <rightBarButtonItems>
                             <barButtonItem systemItem="add" id="DwE-2d-I9A">
-                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <segue destination="HFq-Ig-Wus" kind="show" identifier="writeToHome" id="k8n-ny-IOT"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem title="a-z" id="bSh-fR-VDv">
-                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <action selector="sortButtonClicked:" destination="BYZ-38-t0r" id="U1y-5G-XYe"/>
                                 </connections>
@@ -118,6 +148,7 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="fanMenu" destination="LLN-mc-Ehp" id="k2G-9a-9fe"/>
                         <outlet property="searchBar" destination="h3B-lK-oIW" id="psR-fP-iAN"/>
                         <outlet property="sortButton" destination="bSh-fR-VDv" id="BE1-M3-XtD"/>
                         <outlet property="tableView" destination="jO4-yl-7YZ" id="5Y7-3R-ovW"/>
@@ -239,6 +270,13 @@
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" red="0.2629177868" green="0.4156558514" blue="0.41176399590000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="0.90981733799999998" green="0.90561878679999996" blue="0.93332988019999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" systemColor="labelColor"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
