@@ -8,6 +8,7 @@
 import UIKit
 import FanMenu
 import Macaw
+import RealmSwift
 
 class HomeVC: UIViewController {
     
@@ -33,6 +34,8 @@ class HomeVC: UIViewController {
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print(Realm.Configuration.defaultConfiguration.fileURL!)
         
         fanMenuExec()
         

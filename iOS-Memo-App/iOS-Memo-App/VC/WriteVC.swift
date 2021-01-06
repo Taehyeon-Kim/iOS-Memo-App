@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 //MARK: - Memo Write Protocol
 protocol MemoWriteDelegate {
@@ -20,10 +21,16 @@ class WriteVC: UIViewController {
     
     //MARK: - Variables
     var delegate: MemoWriteDelegate?
+    var realm: Realm?
+    var items: Results<RealmMemo>?
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        realm = try? Realm()
+        
+        items = realm?.objects(RealmMemo.self)
     }
     
     // 뒤로 가기 시 자동 저장
@@ -39,10 +46,25 @@ class WriteVC: UIViewController {
             alert(message: "메모를 입력하세요.")
             return
         }
-        
+        try! realm?.write {
+            realm?.add(inputData(database: RealmMemo()))
+        }
         self.delegate?.writeData(imageUrl: defaultIamgeUrl, title: title, content: content)
         return
         
+    }
+    
+    // Shopping List 객체가 매개변수 및 리턴값
+    func inputData(database: RealmMemo) -> RealmMemo {
+        if let title = memoTitleTextField.text {
+            database.title = title
+        }
+        
+        if let content = memoContentTextView.text {
+            database.content = content
+        }
+        
+        return database
     }
     
     // MARK: - IBAction
