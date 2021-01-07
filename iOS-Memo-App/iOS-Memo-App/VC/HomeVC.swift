@@ -19,6 +19,7 @@ class HomeVC: UIViewController {
     @IBOutlet weak var fanMenu: FanMenu!
     
     //MARK: - Variables
+//    var memoList = [Memo]()
     var memoList = [Memo]()
     var filteredMemoList = [Memo]() // 검색에 의해 필터링 된 배열
     var originMemoList = [Memo]()
@@ -30,6 +31,12 @@ class HomeVC: UIViewController {
     
     let image = UIImage()
     let emptyView = UIView()
+    
+    // realm
+    var items: Results<RealmMemo>? //ShoppingList 데이터
+    var realmMemoList: [RealmMemo] = [] //List 형태로 담기 위한 배열
+    var realm: Realm?
+    var notificationToken: NotificationToken?
 
     //MARK: - Life Cycle
     override func viewDidLoad() {
@@ -37,24 +44,35 @@ class HomeVC: UIViewController {
         
         print(Realm.Configuration.defaultConfiguration.fileURL!)
         
+        realm = try? Realm()
+        
+        items = realm?.objects(RealmMemo.self)
+        
+        notificationToken = items?.observe({ (change) in
+            print("change :", change)
+            self.tableView.reloadData()
+        })
+        
+//        realmMemoList = Array(items!)
+        
         fanMenuExec()
         
-        memoList = [
-            Memo(imageUrl: "avatar1", title: "A - 첫번째 메모", content: "아 오늘은 메모 연습", isOn: false),
-            Memo(imageUrl: "avatar2", title: "2 - 두번째 메모", content: "메모 삭제 기능 추가를 했다", isOn: false),
-            Memo(imageUrl: "avatar3", title: "Z3 - 세번째 메모", content: "너무 춥다 😂", isOn: false),
-            Memo(imageUrl: "avatar4", title: "x - 네번째 메모", content: "놀러 가고 싶다!!!!!", isOn: false),
-            Memo(imageUrl: "avatar5", title: "a - 다섯번째 메모", content: "ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ", isOn: false),
-            Memo(imageUrl: "avatar6", title: "다 - 여섯번째 메모", content: "오늘은 새로운걸 배웠다!! 👻👻👻", isOn: false),
-            Memo(imageUrl: "avatar1", title: "메모연습 - 일곱번째 메모", content: "새로운 메모를 작성하였습니다.", isOn: false),
-            Memo(imageUrl: "avatar4", title: "A1 - 여덟번째 메모", content: "쓸 내용이 없네 ?!", isOn: false),
-            Memo(imageUrl: "avatar3", title: "2 - 아홉번째 메모", content: "잘하고 싶어요 👊", isOn: false),
-            Memo(imageUrl: "avatar2", title: "Z3 - 열번째 메모", content: "화이팅!!!!!!!!!!!!!", isOn: false),
-            Memo(imageUrl: "avatar1", title: "x", content: "a", isOn: false),
-            Memo(imageUrl: "avatar1", title: "a", content: "e", isOn: false),
-            Memo(imageUrl: "avatar2", title: "다", content: "e", isOn: false),
-            Memo(imageUrl: "avatar5", title: "가", content: "g", isOn: false),
-        ]
+//        memoList = [
+//            Memo(imageUrl: "avatar1", title: "A - 첫번째 메모", content: "아 오늘은 메모 연습", isOn: false),
+//            Memo(imageUrl: "avatar2", title: "2 - 두번째 메모", content: "메모 삭제 기능 추가를 했다", isOn: false),
+//            Memo(imageUrl: "avatar3", title: "Z3 - 세번째 메모", content: "너무 춥다 😂", isOn: false),
+//            Memo(imageUrl: "avatar4", title: "x - 네번째 메모", content: "놀러 가고 싶다!!!!!", isOn: false),
+//            Memo(imageUrl: "avatar5", title: "a - 다섯번째 메모", content: "ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ", isOn: false),
+//            Memo(imageUrl: "avatar6", title: "다 - 여섯번째 메모", content: "오늘은 새로운걸 배웠다!! 👻👻👻", isOn: false),
+//            Memo(imageUrl: "avatar1", title: "메모연습 - 일곱번째 메모", content: "새로운 메모를 작성하였습니다.", isOn: false),
+//            Memo(imageUrl: "avatar4", title: "A1 - 여덟번째 메모", content: "쓸 내용이 없네 ?!", isOn: false),
+//            Memo(imageUrl: "avatar3", title: "2 - 아홉번째 메모", content: "잘하고 싶어요 👊", isOn: false),
+//            Memo(imageUrl: "avatar2", title: "Z3 - 열번째 메모", content: "화이팅!!!!!!!!!!!!!", isOn: false),
+//            Memo(imageUrl: "avatar1", title: "x", content: "a", isOn: false),
+//            Memo(imageUrl: "avatar1", title: "a", content: "e", isOn: false),
+//            Memo(imageUrl: "avatar2", title: "다", content: "e", isOn: false),
+//            Memo(imageUrl: "avatar5", title: "가", content: "g", isOn: false),
+//        ]
         
         originMemoList = memoList
         
@@ -80,6 +98,16 @@ class HomeVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         // view가 다시 나타날때 tableview 데이터 리로드
         tableView.reloadData()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        notificationToken?.invalidate()
+    }
+    
+    deinit {
+        notificationToken?.invalidate()
     }
 
     //MARK: - Prepare (write To Home)
@@ -282,12 +310,12 @@ extension HomeVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-        if searching {
-            return filteredMemoList.count
-        } else {
-            return memoList.count
-        }
-            
+//        if searching {
+//            return filteredMemoList.count
+//        } else {
+//            return memoList.count
+//        }
+        return items!.count
         
     }
     
@@ -297,27 +325,30 @@ extension HomeVC: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        var memoList = [Memo]()
-        
-        if searching {
-            memoList = self.filteredMemoList
-        } else {
-            memoList = self.memoList
-        }
+//        var memoList = [RealmMemo]()
+  
+        realmMemoList = Array(items!)
+//        if searching {
+//            memoList = self.filteredMemoList
+//        } else {
+//            memoList = self.memoList
+//        }
         
 
         cell.index = indexPath.row
         cell.delegate = self
         
-        cell.memoImageLabel.image = UIImage(named: memoList[indexPath.row].imageUrl ?? "")
-        cell.memoTitleLabel.text = memoList[indexPath.row].title
-        cell.memoContentLabel.text = memoList[indexPath.row].content
+//        cell.memoImageLabel.image = UIImage(named: memoList[indexPath.row].imageUrl ?? "")
+        
+        cell.memoImageLabel.image = UIImage(named: "avatar3")
+        cell.memoTitleLabel.text = realmMemoList[indexPath.row].title
+        cell.memoContentLabel.text = realmMemoList[indexPath.row].content
 
-        if memoList[indexPath.row].isOn == true {
-            cell.isClicked = true
-        } else {
-            cell.isClicked = false
-        }
+//        if memoList[indexPath.row].isOn == true {
+//            cell.isClicked = true
+//        } else {
+//            cell.isClicked = false
+//        }
     
         return cell
         
